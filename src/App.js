@@ -3,10 +3,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 import './App.css';
 import NavBar from './components/NavBar';
 

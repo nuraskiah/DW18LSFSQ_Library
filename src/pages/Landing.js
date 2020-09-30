@@ -1,9 +1,7 @@
-import React, { Component, useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import landingImage from '../assets/images/Vector 1.png';
 import Login from '../components/Login';
 import Register from '../components/Register';
-import Home from './Home';
 
 function Landing() {
   const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -22,13 +20,14 @@ function Landing() {
         </p>
         <div className="buttons">
           <button
-            className="btn primary"
+            className="btn primary mr-4"
             onClick={() => setShowRegisterModal(true)}
           >
             Sign Up
           </button>
           <button
             className="btn btn-light"
+            style={{ backgroundColor: '#E9E9E9' }}
             onClick={() => setShowLoginModal(true)}
           >
             Sign In
@@ -36,10 +35,18 @@ function Landing() {
           <Login
             show={showLoginModal}
             onHide={() => setShowLoginModal(false)}
+            noAcc={() => {
+              setShowLoginModal(false);
+              setShowRegisterModal(true);
+            }}
           />
           <Register
             show={showRegisterModal}
             onHide={() => setShowRegisterModal(false)}
+            haveAcc={() => {
+              setShowRegisterModal(false);
+              setShowLoginModal(true);
+            }}
           />
         </div>
       </div>

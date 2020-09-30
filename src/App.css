@@ -61,8 +61,6 @@ nav p {
 
 .btn {
   padding: 10px 75px;
-  /* background-color: rgba(233, 233, 233, 0.7); */
-  margin-right: 30px;
 }
 
 .primary {
@@ -77,7 +75,7 @@ nav p {
   color: #ee4622;
 }
 
-.primary:target {
+.primary:active {
   background-color: #ee4622;
   border: 1px solid #ee4622;
   color: white;
@@ -86,9 +84,33 @@ nav p {
 /* login and register modal */
 
 .modal-dialog {
-  width: 430px;
+  width: 400px;
+}
+
+.modal-content {
+  border-radius: 20px;
 }
 
 .modal-body {
-  padding: 30px;
+  padding: 35px;
+  border-radius: 40px;
+}
+
+.sign {
+  font-family: 'Poppins', sans-serif;
+  font-size: 36px;
+}
+
+.account {
+  text-align: center;
+}
+
+.here {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.here:hover,
+.here:active {
+  color: #ee4622;
 }

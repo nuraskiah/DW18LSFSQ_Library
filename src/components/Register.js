@@ -1,13 +1,10 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function Register(props) {
   const [show, setShow] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
   return (
     <Modal
       {...props}
@@ -16,10 +13,10 @@ function Register(props) {
       centered
     >
       <Modal.Body>
-        <h4 className="mb-4">Sign Up</h4>
+        <h4 className="mb-4 sign">Sign Up</h4>
         <Form
           onSubmit={(e) => {
-            handleSubmit(e);
+            e.preventDefault();
           }}
         >
           <Form.Group controlId="email">
@@ -31,8 +28,16 @@ function Register(props) {
               placeholder="Password"
             />
             <InputGroup.Append>
-              <InputGroup.Text id="basic-addon2" onClick={() => setShow(!show)}>
-                @
+              <InputGroup.Text
+                id="basic-addon2"
+                onClick={() => setShow(!show)}
+                style={{ width: 46 }}
+              >
+                {show ? (
+                  <i class="far fa-eye"></i>
+                ) : (
+                  <i class="far fa-eye-slash"></i>
+                )}
               </InputGroup.Text>
             </InputGroup.Append>
           </InputGroup>
@@ -53,12 +58,18 @@ function Register(props) {
             <Form.Control type="text" placeholder="Address" />
           </Form.Group>
           <br />
-          <Link to="/home">
-            <Button type="submit" block className="primary">
+          <Link to="/home" style={{ textDecoration: 'none' }}>
+            <Button variant="light" type="submit" block className="primary">
               Sign Up
             </Button>
           </Link>
         </Form>
+        <p className="account mt-3">
+          Don't have an account? Click{' '}
+          <span className="here" onClick={props.haveAcc}>
+            here
+          </span>
+        </p>
       </Modal.Body>
     </Modal>
   );
