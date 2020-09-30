@@ -52,7 +52,7 @@ function Register(props) {
             </Form.Control>
           </Form.Group>
           <Form.Group controlId="phone">
-            <Form.Control type="text" placeholder="Phone" />
+            <Form.Control type="number" placeholder="Phone" />
           </Form.Group>
           <Form.Group controlId="address">
             <Form.Control type="text" placeholder="Address" />
