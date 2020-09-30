@@ -1,38 +1,94 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* nav */
+nav {
   display: flex;
-  flex-direction: column;
+  position: absolute;
+  float: left;
+  margin-top: 37px;
+  margin-left: 78px;
+}
+
+nav p {
+  font-family: Times New Roman;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 36px;
+}
+
+/* landing */
+
+.landing {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100vh;
+}
+
+.landing-image {
+  position: absolute;
+  width: auto;
+  height: 100vh;
+  right: 0;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.landing .lib-container {
+  width: 650px;
+  margin-left: 78px;
+}
+
+.landing h1 {
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  font-size: 110px;
+  line-height: 82.49%;
+}
+
+.landing-text {
+  margin-top: 66px;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 400px;
+  font-size: 24px;
+  line-height: 33px;
+}
+
+.btn {
+  padding: 10px 75px;
+  /* background-color: rgba(233, 233, 233, 0.7); */
+  margin-right: 30px;
+}
+
+.primary {
+  background-color: #ee4622;
+  border: 1px solid #ee4622;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.primary:hover {
+  background-color: white;
+  border: 1px solid #ee4622;
+  color: #ee4622;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.primary:target {
+  background-color: #ee4622;
+  border: 1px solid #ee4622;
+  color: white;
+}
+
+/* login and register modal */
+
+.modal-dialog {
+  width: 430px;
+}
+
+.modal-body {
+  padding: 30px;
 }
