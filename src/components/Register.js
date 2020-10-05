@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { Context } from '../context/Context';
 
 function Register(props) {
   const [show, setShow] = useState(false);
+  const [state, dispatch] = useContext(Context);
+  const history = useHistory();
 
   return (
     <Modal
@@ -17,15 +21,21 @@ function Register(props) {
         <Form
           onSubmit={(e) => {
             e.preventDefault();
+            dispatch({
+              type: 'LOGIN',
+            });
+            console.log('Login Berhasil');
+            history.push('/home');
           }}
         >
           <Form.Group controlId="email">
-            <Form.Control type="email" placeholder="Email" />
+            <Form.Control type="email" placeholder="Email" required />
           </Form.Group>
           <InputGroup controlId="password" className="mb-3">
             <Form.Control
               type={show ? 'text' : 'password'}
               placeholder="Password"
+              required
             />
             <InputGroup.Append>
               <InputGroup.Text
@@ -34,35 +44,33 @@ function Register(props) {
                 style={{ width: 46 }}
               >
                 {show ? (
-                  <i class="far fa-eye"></i>
+                  <AiOutlineEye size="20px" />
                 ) : (
-                  <i class="far fa-eye-slash"></i>
+                  <AiOutlineEyeInvisible size="20px" />
                 )}
               </InputGroup.Text>
             </InputGroup.Append>
           </InputGroup>
           <Form.Group controlId="name">
-            <Form.Control type="text" placeholder="Full Name" />
+            <Form.Control type="text" placeholder="Full Name" required />
           </Form.Group>
           <Form.Group controlId="gender">
-            <Form.Control as="select">
+            <Form.Control as="select" required>
               <option>Male</option>
               <option>Female</option>
               <option>Other</option>
             </Form.Control>
           </Form.Group>
           <Form.Group controlId="phone">
-            <Form.Control type="number" placeholder="Phone" />
+            <Form.Control type="number" placeholder="Phone" required />
           </Form.Group>
           <Form.Group controlId="address">
-            <Form.Control type="text" placeholder="Address" />
+            <Form.Control type="text" placeholder="Address" required />
           </Form.Group>
           <br />
-          <Link to="/home" style={{ textDecoration: 'none' }}>
-            <Button variant="light" type="submit" block className="primary">
-              Sign Up
-            </Button>
-          </Link>
+          <Button variant="light" type="submit" block className="primary">
+            Sign Up
+          </Button>
         </Form>
         <p className="account mt-3">
           Don't have an account? Click{' '}

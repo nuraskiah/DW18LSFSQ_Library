@@ -12,7 +12,7 @@ function Landing() {
       <img src={landingImage} className="landing-image" />
       <div className="lib-container">
         <h1>
-          <span className="italic">Your</span> library anywhere
+          <span className="italic tnr">Your</span> library anywhere
         </h1>
         <p className="landing-text mb-4">
           Sign-up today and receive unlimited access to all of your reading -
@@ -20,13 +20,13 @@ function Landing() {
         </p>
         <div className="buttons">
           <button
-            className="btn primary mr-4"
+            className="btn lg primary mr-4"
             onClick={() => setShowRegisterModal(true)}
           >
             Sign Up
           </button>
           <button
-            className="btn btn-light"
+            className="btn lg btn-light"
             style={{ backgroundColor: '#E9E9E9' }}
             onClick={() => setShowLoginModal(true)}
           >

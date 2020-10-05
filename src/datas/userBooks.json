@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1,
+    "title": "Blockchain with Hyperledger",
+    "author": "Egi Ganteng",
+    "publication date": "Oktober 2020",
+    "category": "Documentary",
+    "cover": "/assets/images/book5.png",
+    "detail": "this is book's detail",
+    "isbn": "98765432123",
+    "verified": true
+  },
+
+  {
+    "id": 2,
+    "title": "Java EE 8 Microservices",
+    "author": "Egi Ganteng",
+    "publication date": "Oktober 2020",
+    "category": "Documentary",
+    "cover": "/assets/images/book6.png",
+    "detail": "this is book's detail",
+    "isbn": "98765432123",
+    "verified": false
+  }
+]

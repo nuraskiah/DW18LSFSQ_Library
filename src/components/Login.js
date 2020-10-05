@@ -1,9 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { Context } from '../context/Context';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import users from '../datas/users.json';
 
 function Login(props) {
   const [show, setShow] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const { email, password } = formData;
+
+  const [exist, setExist] = useState('');
+  const [state, dispatch] = useContext(Context);
+  const history = useHistory();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    users.map((user) => {
+      if (email === user.email && password === user.password) {
+        setExist(true);
+        if (user.admin) {
+          dispatch({
+            type: 'ADMIN',
+          });
+        }
+        dispatch({
+          type: 'LOGIN',
+        });
+        history.push('/home');
+      }
+    });
+
+    setExist(false);
+  }
 
   return (
     <>
@@ -17,16 +50,29 @@ function Login(props) {
           <h4 className="mb-4 sign">Sign In</h4>
           <Form
             onSubmit={(e) => {
-              e.preventDefault();
+              handleSubmit(e);
             }}
           >
             <Form.Group controlId="email">
-              <Form.Control type="email" placeholder="Email" />
+              <Form.Control
+                type="email"
+                placeholder="Email"
+                value={email}
+                required
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                }}
+              />
             </Form.Group>
             <InputGroup controlId="password" className="mb-3">
               <Form.Control
                 type={show ? 'text' : 'password'}
                 placeholder="Password"
+                value={password}
+                required
+                onChange={(e) => {
+                  setFormData({ ...formData, password: e.target.value });
+                }}
               />
               <InputGroup.Append>
                 <InputGroup.Text
@@ -35,19 +81,28 @@ function Login(props) {
                   style={{ width: 46 }}
                 >
                   {show ? (
-                    <i class="far fa-eye"></i>
+                    <AiOutlineEye size="20px" />
                   ) : (
-                    <i class="far fa-eye-slash"></i>
+                    <AiOutlineEyeInvisible size="20px" />
                   )}
                 </InputGroup.Text>
               </InputGroup.Append>
             </InputGroup>
-            <br />
-            <Link to="/home" style={{ textDecoration: 'none' }}>
-              <Button variant="light" type="submit" block className="primary">
-                Sign In
-              </Button>
-            </Link>
+
+            {exist === false ? (
+              <p
+                className="text-danger italic text-center"
+                style={{ fontSize: '13px' }}
+              >
+                You have entered an invalid email or password
+              </p>
+            ) : (
+              <br />
+            )}
+
+            <Button variant="light" type="submit" block className="primary">
+              Sign In
+            </Button>
           </Form>
           <p className="account mt-3">
             Don't have an account? Click{' '}

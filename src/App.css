@@ -2,22 +2,82 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
+.tnr {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.grey {
+  color: #8a8c90;
+}
+
+.none {
+  text-decoration: none !important;
+  color: black;
+}
+
+#none {
+  color: black;
+}
+
+input,
+select,
+textarea,
+button {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border: 2px solid #ee4622 !important;
+  background-color: rgb(250, 250, 250) !important;
+}
+
+input.form-control,
+select.form-control,
+textarea.form-control,
+div.form-control,
+#basic-addon2 {
+  background-color: rgb(240, 240, 240);
+  border: 2px solid #bcbcbc;
+  color: #333333;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgb(235, 235, 235) inset !important;
+}
 /* nav */
+
 nav {
   display: flex;
+  background-color: white;
+  width: 100%;
+  height: 120px;
+  align-items: center;
   position: absolute;
-  float: left;
-  margin-top: 37px;
-  margin-left: 78px;
+  padding-left: 78px;
+  z-index: 1;
 }
 
-nav p {
-  font-family: Times New Roman;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 36px;
+.nav-item {
+  display: flex;
+  z-index: 100;
+  color: black;
 }
 
 /* landing */
@@ -33,10 +93,7 @@ nav p {
   width: auto;
   height: 100vh;
   right: 0;
-}
-
-.italic {
-  font-style: italic;
+  z-index: 9;
 }
 
 .landing .lib-container {
@@ -60,6 +117,10 @@ nav p {
 }
 
 .btn {
+  padding: 7px 15px;
+}
+
+.btn.lg {
   padding: 10px 75px;
 }
 
@@ -99,6 +160,7 @@ nav p {
 .sign {
   font-family: 'Poppins', sans-serif;
   font-size: 36px;
+  font-weight: 700;
 }
 
 .account {
@@ -119,4 +181,195 @@ input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+/* Home */
+.home {
+  padding: 40px 70px 40px 20px;
+  height: 100vh;
+}
+
+/* Sidebar */
+
+.sidebar-container {
+  display: flex;
+  margin-top: 30px;
+  flex-direction: column;
+  padding: 30px;
+  justify-content: center;
+  justify-items: center;
+  justify-self: center;
+  z-index: 1;
+}
+
+.ava {
+  display: block;
+  height: 100px;
+  width: 100px;
+  border-radius: 100px;
+  background-color: teal;
+  border: 2px solid white;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+  margin: auto;
+  margin-bottom: 20px;
+  z-index: 8;
+}
+
+.name {
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  font-weight: 700;
+}
+
+.navigation {
+  padding: 17px 30px;
+  border-radius: 60px;
+  margin-bottom: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.navigation:hover,
+.active {
+  background-color: #ee4622;
+  color: white;
+}
+
+.icon {
+  margin-right: 20px;
+}
+
+/* List Book */
+
+.jumbotron {
+  width: 100%;
+  height: 445px;
+  background-color: #e6f2fd;
+  border-radius: 10px;
+}
+
+.book-list {
+  display: grid;
+  grid-template-columns: repeat(4, 200px);
+  justify-content: space-between;
+}
+
+.book {
+  border-radius: 10px;
+}
+
+.book img {
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.book:hover img {
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+}
+
+#dropdown {
+  padding: 7px 10px;
+  float: right;
+}
+
+.dropdown-menu {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: none;
+}
+
+/* Detail */
+
+.detail-container p {
+  margin-bottom: 5px;
+}
+
+.detail {
+  margin: 20px 0;
+}
+
+.dh {
+  font-size: 24px;
+}
+
+.dd {
+  font-size: 18px;
+}
+
+/* Profile */
+
+.data-container {
+  width: 100%;
+  background-color: #fdede6;
+  padding: 50px;
+  border-radius: 10px;
+}
+
+.datas {
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.data p {
+  margin: 0;
+  line-height: 1.5em;
+  font-size: 14px;
+}
+
+/* Admin */
+.admin {
+  height: 100vh;
+  background-color: #f9f9f9;
+  padding: 150px 70px;
+}
+
+th {
+  text-align: center;
+}
+
+th,
+tr:nth-child(even) {
+  background-color: white;
+}
+
+tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+td:nth-child(odd),
+td:last-child,
+td:nth-child(4) {
+  text-align: center;
+}
+
+/* popover */
+
+.popover {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.popover-body {
+  padding: 0;
+}
+
+.pop-item {
+  display: flex;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+.pop-item p {
+  margin: 0;
+}
+
+.pop-item:hover {
+  background-color: #eeeeee;
+}
+
+#addSuccess {
+  width: 750px;
 }
