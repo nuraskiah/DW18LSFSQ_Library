@@ -37,13 +37,15 @@ function Admin() {
 }
 
 function UserBooksList(props) {
-  let action;
+  let action, statusClass;
   switch (props.status) {
     case 'Approved':
       action = <FaCheckCircle color="green" size="20px" />;
+      statusClass = 'align-middle text-success';
       break;
     case 'Cancel':
       action = <MdCancel color="red" size="23px" />;
+      statusClass = 'align-middle text-danger';
       break;
     default:
       action = (
@@ -54,6 +56,7 @@ function UserBooksList(props) {
           <Button variant="success">Approve</Button>
         </>
       );
+      statusClass = 'align-middle text-warning';
   }
 
   return (
@@ -63,7 +66,7 @@ function UserBooksList(props) {
         <td className="align-middle">{props.title}</td>
         <td className="align-middle">{props.isbn}</td>
         <td className="align-middle">*.epub</td>
-        <td className="align-middle">{props.status}</td>
+        <td className={statusClass}>{props.status}</td>
         <td className="align-middle">{action}</td>
       </tr>
     </>
