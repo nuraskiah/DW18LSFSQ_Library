@@ -111,7 +111,7 @@ function AddBook() {
           label={file}
         />
 
-        <Button variant="light" type="submit" className="primary">
+        <Button variant="light" type="submit" className="primary float-right">
           Add Book <BiBookAdd size="20px" />
         </Button>
       </Form>
