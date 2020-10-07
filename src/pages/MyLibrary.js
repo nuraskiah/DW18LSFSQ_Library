@@ -5,7 +5,7 @@ import Book from '../components/Book';
 function MyLibrary() {
   return (
     <div className="my-library">
-      <h2 className="bold mb-3">My Library</h2>
+      <h2 className="heading">My Library</h2>
       <div className="book-list">
         {books.map((book, i) => {
           return (

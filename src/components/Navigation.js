@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-function Navigation({ to, activeOnlyWhenExact, icon, label, onClick }) {
+function Navigation({ to, activeOnlyWhenExact, icon, label, onClick, type }) {
   let match = useRouteMatch({
     path: to,
     exact: activeOnlyWhenExact,
@@ -10,7 +10,7 @@ function Navigation({ to, activeOnlyWhenExact, icon, label, onClick }) {
   return (
     <Link to={to} className="none" id="none">
       <div
-        className={match ? 'navigation active' : 'navigation'}
+        className={match ? `navigation ${type} active` : `navigation ${type}`}
         onClick={onClick}
       >
         <span className="icon">{icon}</span>
@@ -24,6 +24,7 @@ Navigation.defaultProps = {
   to: null,
   activeOnlyWhenExact: null,
   onClick: null,
+  type: null,
 };
 
 export default Navigation;

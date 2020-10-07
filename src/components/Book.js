@@ -5,7 +5,7 @@ function Book({ id, cover, title, author }) {
   const history = useHistory();
   return (
     <div className="book" onClick={() => history.push(`/detail/${id}`)}>
-      <img src={cover} className="mb-3" />
+      <img src={cover} alt={title} className="mb-3" />
       <p
         className="title tnr mb-2"
         style={{

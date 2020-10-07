@@ -33,7 +33,8 @@
 input,
 select,
 textarea,
-button {
+button,
+label {
   outline: none !important;
   box-shadow: none !important;
 }
@@ -49,6 +50,7 @@ input.form-control,
 select.form-control,
 textarea.form-control,
 div.form-control,
+label.custom-file-label,
 #basic-addon2 {
   background-color: rgb(240, 240, 240);
   border: 2px solid #bcbcbc;
@@ -57,10 +59,27 @@ div.form-control,
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px rgb(235, 235, 235) inset !important;
 }
+
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px rgb(250, 250, 250) inset !important;
+}
+
+#gender {
+  padding: 6px 8px;
+}
+
+label.custom-file-label::after {
+  display: none !important;
+}
+
+label.custom-file-label {
+  width: max-content !important;
+  cursor: pointer !important;
+}
+
 /* nav */
 
 nav {
@@ -114,7 +133,10 @@ nav {
   width: 400px;
   font-size: 24px;
   line-height: 33px;
+  margin-bottom: 30px;
 }
+
+/* Button */
 
 .btn {
   padding: 7px 15px;
@@ -125,21 +147,37 @@ nav {
 }
 
 .primary {
-  background-color: #ee4622;
-  border: 1px solid #ee4622;
-  color: white;
+  background-color: #ee4622 !important;
+  border: 1px solid #ee4622 !important;
+  color: white !important;
 }
 
 .primary:hover {
-  background-color: white;
-  border: 1px solid #ee4622;
-  color: #ee4622;
+  background-color: white !important;
+  border: 1px solid #ee4622 !important;
+  color: #ee4622 !important;
 }
 
 .primary:active {
-  background-color: #ee4622;
-  border: 1px solid #ee4622;
-  color: white;
+  background-color: #ee4622 !important;
+  border: 1px solid #ee4622 !important;
+  color: white !important;
+}
+
+.light,
+.btn-light {
+  background-color: #e9e9e9;
+  border: 1px solid #e9e9e9;
+}
+
+.light:hover {
+  background-color: #fff;
+  border: 1px solid black;
+}
+
+.light:active {
+  background-color: #e9e9e9;
+  border: 1px solid #e9e9e9;
 }
 
 /* login and register modal */
@@ -208,7 +246,7 @@ input[type='number']::-webkit-outer-spin-button {
   width: 100px;
   border-radius: 100px;
   background-color: teal;
-  border: 2px solid white;
+  border: 3px solid white;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
   margin: auto;
   margin-bottom: 20px;
@@ -236,6 +274,12 @@ input[type='number']::-webkit-outer-spin-button {
   color: white;
 }
 
+.navigation.logout:hover,
+.logout.active {
+  background-color: #ee2222;
+  color: white;
+}
+
 .icon {
   margin-right: 20px;
 }
@@ -257,6 +301,7 @@ input[type='number']::-webkit-outer-spin-button {
 
 .book {
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .book img {
@@ -266,7 +311,7 @@ input[type='number']::-webkit-outer-spin-button {
 
 .book:hover img {
   transform: scale(1.05) translateY(-5px);
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
 }
 
 #dropdown {
@@ -274,10 +319,19 @@ input[type='number']::-webkit-outer-spin-button {
   float: right;
 }
 
+.dropdown-toggle::before {
+  display: none !important;
+}
+
 .dropdown-menu {
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   border: none;
+}
+
+a.dropdown-item:hover {
+  background-color: #ee4622;
+  color: white;
 }
 
 /* Detail */
@@ -288,6 +342,13 @@ input[type='number']::-webkit-outer-spin-button {
 
 .detail {
   margin: 20px 0;
+}
+
+.heading {
+  font-weight: 700;
+  font-size: 36px;
+  font-family: 'Times New Roman', Times, serif;
+  margin-bottom: 25px;
 }
 
 .dh {
@@ -322,9 +383,19 @@ input[type='number']::-webkit-outer-spin-button {
 
 /* Admin */
 .admin {
-  height: 100vh;
   background-color: #f9f9f9;
-  padding: 150px 70px;
+  height: 100%;
+  padding: 150px 70px 0px 70px;
+}
+
+.admin-wrapper {
+  height: 100vh;
+}
+
+th,
+td {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
 }
 
 th {
@@ -346,6 +417,38 @@ td:nth-child(4) {
   text-align: center;
 }
 
+.approve,
+.cancel {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 5px;
+  border: none;
+  width: 100px;
+  padding: 5px 0;
+}
+
+.approve {
+  background-color: #0acf83;
+}
+
+.cancel {
+  background-color: #ff0742;
+}
+
+.text-approved,
+.text-cancel,
+.text-warning {
+  font-weight: 500;
+}
+
+.text-approved {
+  color: #0acf83;
+}
+
+.text-cancel {
+  color: #ff0742;
+}
 /* popover */
 
 .popover {

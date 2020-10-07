@@ -6,32 +6,35 @@ import { MdCancel } from 'react-icons/md';
 
 function Admin() {
   return (
-    <div className="admin mb-3">
-      <h2 className="bold">Book Verification</h2>
-      <Table hover>
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Users or Author</th>
-            <th>ISBN</th>
-            <th>E-book</th>
-            <th>Status</th>
-            <th>Admin</th>
-          </tr>
-        </thead>
-        <tbody>
-          {booksQueue.map((b, i) => {
-            return (
-              <UserBooksList
-                no={i + 1}
-                title={b.title}
-                isbn={b.isbn}
-                status={b.status}
-              />
-            );
-          })}
-        </tbody>
-      </Table>
+    <div className="admin">
+      <div class="admin-wrapper">
+        <h2 className="bold">Book Verification</h2>
+        <Table hover>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Users or Author</th>
+              <th>ISBN</th>
+              <th>E-book</th>
+              <th>Status</th>
+              <th>Admin</th>
+            </tr>
+          </thead>
+          <tbody>
+            {booksQueue.map((b, i) => {
+              return (
+                <UserBooksList
+                  no={i + 1}
+                  title={b.title}
+                  isbn={b.isbn}
+                  ebook={b.ebook}
+                  status={b.status}
+                />
+              );
+            })}
+          </tbody>
+        </Table>
+      </div>
     </div>
   );
 }
@@ -40,22 +43,17 @@ function UserBooksList(props) {
   let action, statusClass;
   switch (props.status) {
     case 'Approved':
-      action = <FaCheckCircle color="green" size="20px" />;
-      statusClass = 'align-middle text-success';
+      action = <FaCheckCircle color="#3BB54A" size="25px" />;
+      statusClass = 'align-middle text-approved';
       break;
     case 'Cancel':
-      action = <MdCancel color="red" size="23px" />;
-      statusClass = 'align-middle text-danger';
+      // action = <MdCancel color="#ff0742" size="29px" />;
+      action = <AdminButton />;
+      statusClass = 'align-middle text-cancel';
       break;
     default:
-      action = (
-        <>
-          <Button variant="danger" className="mr-2">
-            Cancel
-          </Button>
-          <Button variant="success">Approve</Button>
-        </>
-      );
+      action = <AdminButton />;
+
       statusClass = 'align-middle text-warning';
   }
 
@@ -65,12 +63,27 @@ function UserBooksList(props) {
         <td className="align-middle">{props.no}</td>
         <td className="align-middle">{props.title}</td>
         <td className="align-middle">{props.isbn}</td>
-        <td className="align-middle">*.epub</td>
-        <td className={statusClass}>{props.status}</td>
+        <td className="align-middle">{props.ebook}</td>
+        <td className={statusClass}>
+          {props.status === 'Waiting' ? 'Waiting to be verified' : props.status}
+        </td>
         <td className="align-middle">{action}</td>
       </tr>
     </>
   );
 }
+
+const AdminButton = () => {
+  return (
+    <>
+      <Button variant="danger" className="cancel mr-2">
+        Cancel
+      </Button>
+      <Button variant="success" className="approve">
+        Approve
+      </Button>
+    </>
+  );
+};
 
 export default Admin;

@@ -49,6 +49,7 @@ function Sidebar() {
             type: 'LOGOUT',
           })
         }
+        type="logout"
       />
     </div>
   );

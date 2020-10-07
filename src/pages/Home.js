@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import img from '../assets/images/book-jumbotron.png';
 import books from '../datas/books.json';
-import { AiOutlineLeft } from 'react-icons/ai';
-import {
-  Button,
-  DropdownButton,
-  Dropdown,
-  Image,
-  Row,
-  Col,
-} from 'react-bootstrap';
-import backdrop from '../assets/images/Frame 1.png';
+import { BsChevronLeft } from 'react-icons/bs';
+
+import { DropdownButton, Dropdown, Row, Col } from 'react-bootstrap';
 
 import Book from '../components/Book';
 
@@ -44,7 +37,6 @@ function List() {
     });
   } else {
     bookList = books
-      .map((book) => book)
       .filter((book) => book.category === selected)
       .map((book, i) => {
         return (
@@ -61,26 +53,16 @@ function List() {
 
   return (
     <>
-      <div className="mb-3 jumbotron" style={{ padding: '30px 80px' }}>
-        <Row noGutters style={{ display: 'flex', alignItems: 'center' }}>
-          <Col md={8}>
-            <h1
-              className="tnr bold"
-              style={{ fontSize: 96, lineHeight: '1em' }}
-            >
-              Share, read and <span className="italic tnr bold">love</span>
-            </h1>
-            <p className="dh">Reading is fascinating</p>
-          </Col>
-          <Col md={4}>
-            <img src={img} />
-          </Col>
-        </Row>
-      </div>
+      <Jumbotron />
 
       <div className="main-container mt-5">
         <DropdownButton
-          title="Categories"
+          title={
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <BsChevronLeft size="18px" className="mr-1" />
+              Categories
+            </div>
+          }
           id="dropdown"
           drop="left"
           variant="light"
@@ -92,12 +74,30 @@ function List() {
           {dropdownItem}
         </DropdownButton>
 
-        <h2 className="bold mb-3">Books List</h2>
+        <h2 className="heading">Books List</h2>
 
         <div className="book-list">{bookList}</div>
       </div>
     </>
   );
 }
+
+const Jumbotron = () => {
+  return (
+    <div className="mb-3 jumbotron" style={{ padding: '30px 80px' }}>
+      <Row noGutters style={{ display: 'flex', alignItems: 'center' }}>
+        <Col md={8}>
+          <h1 className="tnr bold" style={{ fontSize: 96, lineHeight: '1em' }}>
+            Share, read and <span className="italic tnr bold">love</span>
+          </h1>
+          <p className="dh">Reading is fascinating</p>
+        </Col>
+        <Col md={4}>
+          <img src={img} alt="backdrop" />
+        </Col>
+      </Row>
+    </div>
+  );
+};
 
 export default List;

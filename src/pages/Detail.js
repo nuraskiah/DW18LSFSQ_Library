@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Modal, Alert } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import { useParams, Link } from 'react-router-dom';
 import { BsBookmarkPlus, BsChevronRight } from 'react-icons/bs';
 import books from '../datas/books.json';
@@ -48,7 +48,7 @@ const Detail = () => {
       <br />
       <Row>
         <Col>
-          <h3 className="bold mb-4">About This Book</h3>
+          <h3 className="heading">About This Book</h3>
           <p className="text-justify">{book.detail}</p>
           <br />
           <br />

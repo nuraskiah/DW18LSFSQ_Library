@@ -6,6 +6,7 @@ const NotFound = () => {
     <div className="landing">
       <img
         src={image}
+        alt="not-found"
         className="landing-image"
         style={{ right: '0', zIndex: '1 !important' }}
       />

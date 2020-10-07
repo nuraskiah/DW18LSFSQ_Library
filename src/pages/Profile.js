@@ -2,7 +2,6 @@ import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import userBooks from '../datas/userBooks.json';
 import Book from '../components/Book';
-import img from '../assets/images/book5.png';
 
 // Icon
 import { MdEmail, MdLocationOn } from 'react-icons/md';
@@ -24,7 +23,7 @@ function MyProfile() {
     <div className="profile-container">
       <Row>
         <Col>
-          <h2 className="bold mb-3">Profile</h2>
+          <h2 className="heading">Profile</h2>
           <div className="data-container">
             <Row noGutters="true">
               <Col className="datas">
@@ -89,7 +88,7 @@ function MyProfile() {
 function MyBooks() {
   return (
     <div className="my-books">
-      <h2 className="bold">My Books</h2>
+      <h2 className="heading">My Books</h2>
       <div className="book-list mt-3">
         {userBooks.map((book, i) => {
           return (

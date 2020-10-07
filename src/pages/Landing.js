@@ -14,7 +14,7 @@ function Landing() {
         <h1>
           <span className="italic tnr">Your</span> library anywhere
         </h1>
-        <p className="landing-text mb-4">
+        <p className="landing-text">
           Sign-up today and receive unlimited access to all of your reading -
           share your book.
         </p>
@@ -26,8 +26,7 @@ function Landing() {
             Sign Up
           </button>
           <button
-            className="btn lg btn-light"
-            style={{ backgroundColor: '#E9E9E9' }}
+            className="btn lg light"
             onClick={() => setShowLoginModal(true)}
           >
             Sign In
