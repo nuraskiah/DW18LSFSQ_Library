@@ -8,10 +8,10 @@
 #### `Step 2` - Go into the project directory and install dependencies
 	$ npm install
 
-#### `Step 3` - run application
+#### `Step 3` - Run application
 	$ npm start
   
-Open `http://localhost:3000` in browser
+Open `http://localhost:3000` in browser!
 
 ## Depedencies
 - [React Router](https://www.npmjs.com/package/react-router-dom)
