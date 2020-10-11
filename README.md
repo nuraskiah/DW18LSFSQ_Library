@@ -11,4 +11,12 @@
 #### `Step 3` - run application
 	$ npm start
   
+Open `http://localhost:3000` in browser
+
+## Depedencies
+- [React Router](https://www.npmjs.com/package/react-router-dom)
+- [React Bootstrap](https://www.npmjs.com/package/react-bootstrap)
+- [React Icons](https://www.npmjs.com/package/react-icons)
+- [React Reader](https://www.npmjs.com/package/react-reader)
+
 > This project was bootstrapped with Create React App.
