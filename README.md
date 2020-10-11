@@ -13,7 +13,7 @@
   
 Open `http://localhost:3000` in browser!
 
-## Depedencies
+## Dependencies
 - [React Router](https://www.npmjs.com/package/react-router-dom)
 - [React Bootstrap](https://www.npmjs.com/package/react-bootstrap)
 - [React Icons](https://www.npmjs.com/package/react-icons)
