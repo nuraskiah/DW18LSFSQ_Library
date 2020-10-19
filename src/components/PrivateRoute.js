@@ -9,7 +9,13 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        state.isLogin ? <Component {...props} /> : <Redirect to="/" />
+        state.isLoading ? (
+          <h1>Loading...</h1>
+        ) : state.isLogin ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/" />
+        )
       }
     />
   );
@@ -22,7 +28,13 @@ export const AdminRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        state.isAdmin ? <Component {...props} /> : <Redirect to="/home" />
+        state.isLoading ? (
+          <h1>Loading...</h1>
+        ) : state.isAdmin ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/home" />
+        )
       }
     />
   );

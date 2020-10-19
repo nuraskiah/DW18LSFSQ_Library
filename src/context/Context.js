@@ -3,33 +3,56 @@ import React, { createContext, useReducer } from 'react';
 export const Context = createContext();
 
 const initialState = {
-  isLogin: false || localStorage.getItem('isLogin'),
-  isAdmin: false || localStorage.getItem('isAdmin'),
+  isLogin: false,
+  isAdmin: false,
+  user: {},
+  isLoading: true,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN':
-      localStorage.setItem('isLogin', true);
+    case 'LOGIN_SUCCESS':
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         isLogin: true,
+        isLoading: false,
       };
 
-    case 'ADMIN':
-      localStorage.setItem('isAdmin', true);
+    case 'GET_USER':
+      let isAdmin = false;
+      if (action.payload.role === 'admin') isAdmin = true;
       return {
         ...state,
-        isAdmin: true,
+        isLogin: true,
+        isAdmin,
+        user: action.payload,
+        isLoading: false,
       };
 
+    case 'AUTH_ERROR':
+    case 'LOGIN_FAILED':
+      return {
+        ...state,
+        isLogin: false,
+        isLoading: false,
+      };
+
+    // case 'ADMIN':
+    //   return {
+    //     ...state,
+    //     isAdmin: true,
+    //     isLoading: false,
+    //   };
+
     case 'LOGOUT':
-      localStorage.removeItem('isLogin');
-      localStorage.removeItem('isAdmin');
+      localStorage.removeItem('token');
       return {
         ...state,
         isLogin: false,
         isAdmin: false,
+        isLoading: false,
+        // isAdmin: false,
       };
 
     default:

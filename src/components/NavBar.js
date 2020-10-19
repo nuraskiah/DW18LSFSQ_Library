@@ -70,19 +70,20 @@ function NavBar() {
               </Popover>
             }
           >
-            <div
+            <img
+              src={`http://localhost:5000/photos/${state.user.photo}`}
               style={{
                 width: 50,
                 height: 50,
                 position: 'absolute',
                 right: '35px',
-                backgroundColor: 'teal',
                 borderRadius: 50,
                 boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.3)',
+                objectFit: 'cover',
                 cursor: 'pointer',
               }}
               className="nav-item"
-            ></div>
+            ></img>
           </OverlayTrigger>
         </>
       )}

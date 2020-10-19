@@ -30,6 +30,19 @@
   color: black;
 }
 
+.center {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+}
+
+.vertical-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap !important;
+}
+
 input,
 select,
 textarea,
@@ -41,7 +54,8 @@ label {
 
 input:focus,
 select:focus,
-textarea:focus {
+textarea:focus,
+.ck-content:focus {
   border: 2px solid #ee4622 !important;
   background-color: rgb(250, 250, 250) !important;
 }
@@ -51,6 +65,7 @@ select.form-control,
 textarea.form-control,
 div.form-control,
 label.custom-file-label,
+.ck-content,
 #basic-addon2 {
   background-color: rgb(240, 240, 240);
   border: 2px solid #bcbcbc;
@@ -67,8 +82,18 @@ input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 30px rgb(250, 250, 250) inset !important;
 }
 
-#gender {
-  padding: 6px 8px;
+select {
+  padding: 6px 8px !important;
+}
+
+.change-action {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#custom-file-translate-html.custom-file-input {
+  width: 165px;
 }
 
 label.custom-file-label::after {
@@ -78,6 +103,8 @@ label.custom-file-label::after {
 label.custom-file-label {
   width: max-content !important;
   cursor: pointer !important;
+  display: flex !important;
+  justify-content: center !important;
 }
 
 /* nav */
@@ -244,8 +271,8 @@ input[type='number']::-webkit-outer-spin-button {
   display: block;
   height: 100px;
   width: 100px;
+  object-fit: cover;
   border-radius: 100px;
-  background-color: teal;
   border: 3px solid white;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
   margin: auto;
@@ -291,6 +318,9 @@ input[type='number']::-webkit-outer-spin-button {
   height: 445px;
   background-color: #e6f2fd;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 30px 80px;
 }
 
 .book-list {
@@ -330,8 +360,8 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 a.dropdown-item:hover {
-  background-color: #ee4622;
-  color: white;
+  background-color: rgba(238, 71, 34, 0.1);
+  color: black;
 }
 
 /* Detail */
@@ -357,6 +387,30 @@ a.dropdown-item:hover {
 
 .dd {
   font-size: 18px;
+}
+
+/* Reader */
+
+.reader-container {
+  padding-top: 120px;
+  height: 100vh;
+}
+
+.reader-container.fullscreen {
+  padding-top: 0;
+  height: 100vh;
+}
+
+.reader-action {
+  position: absolute;
+  right: 0px;
+  z-index: 100;
+  padding: 7px;
+}
+
+.reader-btn {
+  padding: 5px;
+  display: inline-block;
 }
 
 /* Profile */
@@ -417,6 +471,22 @@ td:nth-child(4) {
   text-align: center;
 }
 
+td:first-child {
+  width: 3%;
+}
+
+td:nth-child(2) {
+  width: 30%;
+}
+
+td:nth-last-child(2) {
+  width: 10%;
+}
+
+td:last-child {
+  width: 20%;
+}
+
 .approve,
 .cancel {
   font-family: 'Poppins', sans-serif;
@@ -463,6 +533,7 @@ td:nth-child(4) {
   display: flex;
   padding: 10px 20px;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .pop-item p {

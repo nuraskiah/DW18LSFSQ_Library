@@ -7,10 +7,11 @@ import { VscLibrary } from 'react-icons/vsc';
 
 function Sidebar() {
   const [state, dispatch] = useContext(Context);
+  const { photo, fullName } = state.user;
   return (
     <div className="sidebar-container">
-      <div className="ava"></div>
-      <p className="name dd">Full Name</p>
+      <img src={`http://localhost:5000/photos/${photo}`} className="ava" />
+      <p className="name dd">{fullName}</p>
       <br />
       <hr />
 

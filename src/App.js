@@ -1,7 +1,9 @@
-import React from 'react';
-import { ContextProvider } from './context/Context';
+import React, { useContext, useEffect } from 'react';
+
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
+import { API, setToken } from './config/config';
+import { Context } from './context/Context';
 import './App.css';
 
 // components
@@ -19,7 +21,7 @@ import Home from './pages/Home';
 import Detail from './pages/Detail';
 import Profile from './pages/Profile';
 import MyLibrary from './pages/MyLibrary';
-import AddBook from './pages/AddBook';
+import UserAddBook from './pages/UserAddBook';
 
 const routes = [
   {
@@ -36,7 +38,7 @@ const routes = [
   },
   {
     path: '/add-book',
-    component: AddBook,
+    component: UserAddBook,
   },
   {
     path: '/detail/:id',
@@ -44,48 +46,71 @@ const routes = [
   },
 ];
 
-function App() {
-  return (
-    <ContextProvider>
-      <Router>
-        <NavBar />
+if (localStorage.token) {
+  setToken(localStorage.token);
+}
 
-        <Switch>
-          <Route exact path="/" component={Landing} />
-          <AdminRoute exact path="/admin" component={Admin} />
-          <AdminRoute exact path="/admin/add-book" component={AdminAddBook} />
-          <PrivateRoute path="/read" component={Read} />
-          <Route
-            path={['/home', '/profile', '/my-library', '/detail', '/add-book']}
-          >
-            <div className="home mb-5">
-              <Row>
-                <Col md={3} style={{ zIndex: '1 !important' }}>
-                  <Sidebar />
-                </Col>
-                <Col md={9} className="p-0" style={{ zIndex: 4 }}>
-                  <Switch>
-                    {routes.map(({ path, component }, key) => {
-                      return (
-                        <PrivateRoute
-                          exact
-                          path={path}
-                          component={component}
-                          key={key}
-                        />
-                      );
-                    })}
-                  </Switch>
-                </Col>
-              </Row>
-              <br />
-              <br />
-            </div>
-          </Route>
-          <Route path="*" component={NotFound} />
-        </Switch>
-      </Router>
-    </ContextProvider>
+function App() {
+  const [state, dispatch] = useContext(Context);
+
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const { data } = await API.get('/validate');
+
+        dispatch({
+          type: 'GET_USER',
+          payload: data.data,
+        });
+      } catch (error) {
+        dispatch({
+          type: 'AUTH_ERROR',
+        });
+      }
+    };
+
+    loadUser();
+  }, []);
+
+  return (
+    <Router>
+      <NavBar />
+
+      <Switch>
+        <Route exact path="/" component={Landing} />
+        <AdminRoute exact path="/admin" component={Admin} />
+        <AdminRoute exact path="/admin/add-book" component={AdminAddBook} />
+        <PrivateRoute exact path="/read/:id" component={Read} />
+        <Route
+          path={['/home', '/profile', '/my-library', '/detail', '/add-book']}
+        >
+          <div className="home mb-5">
+            <Row>
+              <Col md={3} style={{ zIndex: '1 !important' }}>
+                <Sidebar />
+              </Col>
+              <Col md={9} className="p-0" style={{ zIndex: 4 }}>
+                <Switch>
+                  {routes.map(({ path, component }, key) => {
+                    return (
+                      <PrivateRoute
+                        exact
+                        path={path}
+                        component={component}
+                        key={key}
+                      />
+                    );
+                  })}
+                </Switch>
+              </Col>
+            </Row>
+            <br />
+            <br />
+          </div>
+        </Route>
+        <Route path="*" component={NotFound} />
+      </Switch>
+    </Router>
   );
 }
 

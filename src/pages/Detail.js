@@ -1,28 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
-import { useParams, Link } from 'react-router-dom';
-import { BsBookmarkPlus, BsChevronRight } from 'react-icons/bs';
-import books from '../datas/books.json';
+import { useParams, useHistory } from 'react-router-dom';
+import { BsBookmarkPlus, BsBookmarkDash, BsChevronRight } from 'react-icons/bs';
+import ReactHtmlParser from 'react-html-parser';
+import { API } from '../config/config';
+import { useMutation, useQuery } from 'react-query';
+import { Context } from '../context/Context';
 
 import AlertModal from '../components/AlertModal';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
 
 const Detail = () => {
   const { id } = useParams();
-  const book = books.filter((book) => book.id == id)[0];
+  const history = useHistory();
 
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAddAlert, setShowAddAlert] = useState(false);
+  const [showRmvAlert, setShowRmvAddAlert] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
+  const [state, dispatch] = useContext(Context);
+  const userId = state.user.id;
 
-  return (
+  const { isLoading, error, data: book } = useQuery('getBook', async () => {
+    const { data } = await API.get(`/book/${id}`);
+    const book = data.data;
+    if (book.bookmarks.some((bookmark) => bookmark.userId === userId))
+      setBookmarked(true);
+    return book;
+  });
+
+  const [bookmark] = useMutation((id) => API.post(`/bookmark/${id}/${userId}`));
+
+  const [unBookmark] = useMutation((id) =>
+    API.delete(`/unbookmark/${id}/${userId}`)
+  );
+
+  const addBookmark = () => {
+    setShowAddAlert(true);
+    bookmark(id);
+    setBookmarked(true);
+  };
+
+  const removeBookmark = () => {
+    setShowRmvAddAlert(true);
+    unBookmark(id);
+    setBookmarked(false);
+  };
+
+  return isLoading ? (
+    <Loading />
+  ) : error ? (
+    <Error />
+  ) : (
     <div className="detail-container">
       <Row>
         <Col md={5}>
           <img
-            src={book.cover}
+            src={
+              book.cover.match('http')
+                ? book.cover
+                : `http://localhost:5000/covers/${book.cover}`
+            }
             alt="cover"
             style={{
               width: '400px',
               height: '540px',
               borderRadius: '10px',
+              objectFit: 'cover',
             }}
           />
         </Col>
@@ -37,8 +81,8 @@ const Detail = () => {
           <p className="mt-3">{book.author}</p>
           <br />
 
-          <DetailItem name="Publication date" data={book.date} />
-          <DetailItem name="Category" data={book.category} />
+          <DetailItem name="Publication date" data={book.publication} />
+          <DetailItem name="Category" data={book.category.name} />
           <DetailItem name="Pages" data={book.pages} />
           <DetailItem name="ISBN" data={book.isbn} style="text-danger" />
         </Col>
@@ -49,30 +93,51 @@ const Detail = () => {
       <Row>
         <Col>
           <h3 className="heading">About This Book</h3>
-          <p className="text-justify">{book.detail}</p>
+          <p className="text-justify">{ReactHtmlParser(book.about)}</p>
           <br />
           <br />
-          <Link to="/read">
-            <Button variant="light" className="float-right">
-              Read Book <BsChevronRight size="20px" />
-            </Button>
-          </Link>
+
           <Button
             variant="light"
-            className="primary mr-3 float-right"
-            onClick={() => {
-              setShowAlert(true);
-            }}
+            className="float-right"
+            onClick={() => history.push(`/read/${book.id}`)}
           >
-            Add to Library <BsBookmarkPlus size="20px" />
+            Read Book <BsChevronRight size="20px" />
           </Button>
+
+          {bookmarked ? (
+            <Button
+              variant="light"
+              className="primary mr-3 float-right"
+              onClick={() => {
+                removeBookmark();
+              }}
+            >
+              Remove from Library <BsBookmarkDash size="20px" />
+            </Button>
+          ) : (
+            <Button
+              variant="light"
+              className="primary mr-3 float-right"
+              onClick={() => {
+                addBookmark();
+              }}
+            >
+              Add to Library <BsBookmarkPlus size="20px" />
+            </Button>
+          )}
         </Col>
       </Row>
 
       <AlertModal
-        show={showAlert}
-        onHide={() => setShowAlert(false)}
+        show={showAddAlert}
+        onHide={() => setShowAddAlert(false)}
         label="Your book has been added successfully"
+      />
+      <AlertModal
+        show={showRmvAlert}
+        onHide={() => setShowRmvAddAlert(false)}
+        label="Your book has been removed successfully"
       />
     </div>
   );

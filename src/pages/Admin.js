@@ -1,13 +1,44 @@
-import React from 'react';
-import { Table, Button } from 'react-bootstrap';
-import booksQueue from '../datas/booksQueue.json';
-import { FaCheckCircle } from 'react-icons/fa';
-import { MdCancel } from 'react-icons/md';
+import React, { useState } from 'react';
+import { Table, DropdownButton, Dropdown } from 'react-bootstrap';
+import { BsChevronLeft } from 'react-icons/bs';
+import { useQuery } from 'react-query';
+import { API } from '../config/config';
 
-function Admin() {
-  return (
+import UserBooksList from '../components/UserBooksList';
+
+const Admin = () => {
+  const [selected, setSelected] = useState('');
+
+  const { isLoading, data, refetch } = useQuery('getBooks', () =>
+    API.get('/books')
+  );
+
+  return isLoading ? (
+    <h1>Loading...</h1>
+  ) : (
     <div className="admin">
       <div class="admin-wrapper">
+        <DropdownButton
+          title={
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <BsChevronLeft size="18px" className="mr-1" />
+              Status
+            </div>
+          }
+          id="dropdown"
+          drop="left"
+          variant="light"
+          onSelect={(e) => {
+            setSelected(e);
+            console.log(selected);
+          }}
+        >
+          <Dropdown.Item eventKey="All">All</Dropdown.Item>
+          <Dropdown.Item eventKey="Approved">Approved</Dropdown.Item>
+          <Dropdown.Item eventKey="Pending">Waiting</Dropdown.Item>
+          <Dropdown.Item eventKey="Rejected">Cancel</Dropdown.Item>
+        </DropdownButton>
+
         <h2 className="bold">Book Verification</h2>
         <Table hover>
           <thead>
@@ -17,72 +48,30 @@ function Admin() {
               <th>ISBN</th>
               <th>E-book</th>
               <th>Status</th>
-              <th>Admin</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {booksQueue.map((b, i) => {
-              return (
+            {data.data.data
+              .filter((book) => {
+                if (selected !== 'All') return book.status.includes(selected);
+                else return book;
+              })
+              .map((book, index) => (
                 <UserBooksList
-                  no={i + 1}
-                  title={b.title}
-                  isbn={b.isbn}
-                  ebook={b.ebook}
-                  status={b.status}
+                  no={index + 1}
+                  bookId={book.id}
+                  title={book.title}
+                  isbn={book.isbn}
+                  ebook={book.file}
+                  status={book.status}
+                  refetchBooks={refetch}
                 />
-              );
-            })}
+              ))}
           </tbody>
         </Table>
       </div>
     </div>
-  );
-}
-
-function UserBooksList(props) {
-  let action, statusClass;
-  switch (props.status) {
-    case 'Approved':
-      action = <FaCheckCircle color="#3BB54A" size="25px" />;
-      statusClass = 'align-middle text-approved';
-      break;
-    case 'Cancel':
-      // action = <MdCancel color="#ff0742" size="29px" />;
-      action = <AdminButton />;
-      statusClass = 'align-middle text-cancel';
-      break;
-    default:
-      action = <AdminButton />;
-
-      statusClass = 'align-middle text-warning';
-  }
-
-  return (
-    <>
-      <tr>
-        <td className="align-middle">{props.no}</td>
-        <td className="align-middle">{props.title}</td>
-        <td className="align-middle">{props.isbn}</td>
-        <td className="align-middle">{props.ebook}</td>
-        <td className={statusClass}>
-          {props.status === 'Waiting' ? 'Waiting to be verified' : props.status}
-        </td>
-        <td className="align-middle">{action}</td>
-      </tr>
-    </>
-  );
-}
-
-const AdminButton = () => {
-  return (
-    <>
-      <Button variant="danger" className="cancel mr-2">
-        Cancel
-      </Button>
-      <Button variant="success" className="approve">
-        Approve
-      </Button>
-    </>
   );
 };
 

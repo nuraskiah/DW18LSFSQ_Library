@@ -1,13 +1,13 @@
 import React from 'react';
-import AddBook from './AddBook';
-import { Form, Button } from 'react-bootstrap';
-import { BiBookAdd } from 'react-icons/bi';
+import FormAddBook from '../components/FormAddBook';
 
 function AdminAddBook() {
   return (
     <div className="admin">
       <div class="admin-wrapper">
-        <AddBook />
+        <h2 className="bold mb-3">Add Book</h2>
+        <FormAddBook type="admin" />
+        <br />
         <br />
         <br />
       </div>
