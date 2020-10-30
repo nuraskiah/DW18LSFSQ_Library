@@ -63,11 +63,10 @@ const FormAddBook = (props) => {
   const [addBook] = useMutation(async () => {
     setShowErrorAlert(false);
 
-    let userId = 5;
     let status = 'Approved';
+    const userId = state.user.id;
     if (props.type === 'user') {
       author = state.user.fullName;
-      userId = state.user.id;
       status = 'Pending';
     }
 
