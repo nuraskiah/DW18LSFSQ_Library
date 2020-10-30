@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const API = axios.create({
-  baseURL: 'http://https://library-dw18lsfsq.herokuapp.com/api/v1',
+  baseURL: 'https://library-dw18lsfsq.herokuapp.com/api/v1',
 });
 
 export const setToken = (token) => {
