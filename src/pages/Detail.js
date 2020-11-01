@@ -56,11 +56,7 @@ const Detail = () => {
       <Row>
         <Col md={5}>
           <img
-            src={
-              book.cover.match('http')
-                ? book.cover
-                : `http://localhost:5000/covers/${book.cover}`
-            }
+            src={book.cover}
             alt="cover"
             style={{
               width: '400px',

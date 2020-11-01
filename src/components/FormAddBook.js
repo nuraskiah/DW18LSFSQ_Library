@@ -225,15 +225,15 @@ const FormAddBook = (props) => {
           />
         </Form.Group>
         <Form.Group>
-          {/* <Form.Control
+          <Form.Control
             as="textarea"
             value={about}
             name="about"
             rows={5}
             placeholder="About This Book"
             onChange={(e) => handleChange(e)}
-          /> */}
-          <CKEditor
+          />
+          {/* <CKEditor
             editor={InlineEditor}
             className="form-control"
             data={about}
@@ -256,7 +256,7 @@ const FormAddBook = (props) => {
                 about: data,
               });
             }}
-          />
+          /> */}
         </Form.Group>
 
         <Form.Group>

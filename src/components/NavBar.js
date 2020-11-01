@@ -71,7 +71,7 @@ function NavBar() {
             }
           >
             <img
-              src={`http://localhost:5000/photos/${state.user.photo}`}
+              src={state.user.photo}
               style={{
                 width: 50,
                 height: 50,

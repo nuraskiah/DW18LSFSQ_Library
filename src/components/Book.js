@@ -6,9 +6,7 @@ function Book({ id, cover, title, author }) {
   return (
     <div className="book" onClick={() => history.push(`/detail/${id}`)}>
       <img
-        src={
-          cover.match('http') ? cover : `http://localhost:5000/covers/${cover}`
-        }
+        src={cover}
         alt={title}
         className="mb-3"
         style={{ width: 200, height: 270, objectFit: 'cover' }}

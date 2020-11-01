@@ -10,7 +10,7 @@ function Sidebar() {
   const { photo, fullName } = state.user;
   return (
     <div className="sidebar-container">
-      <img src={`http://localhost:5000/photos/${photo}`} className="ava" />
+      <img src={photo} className="ava" />
       <p className="name dd">{fullName}</p>
       <br />
       <hr />

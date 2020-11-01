@@ -55,7 +55,7 @@ function List() {
                     <Carousel.Item>
                       <img
                         className="d-block w-100"
-                        src={`http://localhost:5000/covers/${book.cover}`}
+                        src={book.cover}
                         alt={book.title}
                         style={{ objectFit: 'cover', cursor: 'pointer' }}
                         onClick={() => history.push(`/detail/${book.id}`)}

@@ -43,10 +43,16 @@ const ChangeProfilePhoto = (props) => {
   // -------------------- CROP IMAGE --------------------------
 
   const [blob, setBlob] = useState(null);
+  const [base, setBase] = useState(null);
 
   const getBlob = (blob) => {
     // pass blob up from the ImageCropper component
     setBlob(blob);
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = () => {
+      setBase(reader.result);
+    };
   };
 
   const handleFileChange = (e) => {

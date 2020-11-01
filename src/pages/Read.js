@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { BiFullscreen, BiExitFullscreen, BiFontSize } from 'react-icons/bi';
 
-import { API } from '../config/config';
+import { API, fileURL } from '../config/config';
 import Loading from '../components/Loading';
 
 const Read = () => {
@@ -59,7 +59,7 @@ const Read = () => {
         </div>
         <div style={{ position: 'relative', height: '100%' }}>
           <ReactReader
-            url={`http://localhost:5000/files/${book.file}`}
+            url={`${fileURL}/${book.file}`}
             title={book.title}
             getRendition={(rendition) => getRendition(rendition)}
             // styles={{ fontSize: '140%' }}
