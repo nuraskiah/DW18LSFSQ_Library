@@ -17,7 +17,7 @@ const UserBooksList = (props) => {
       status: 'Approved',
     });
 
-    await API.patch(`/book/${props.BookId}`, body, config);
+    await API.patch(`/book/${props.bookId}`, body, config);
     props.refetchBooks();
   });
 
@@ -32,12 +32,12 @@ const UserBooksList = (props) => {
       status: 'Rejected',
     });
 
-    await API.patch(`/book/${props.BookId}`, body, config);
+    await API.patch(`/book/${props.bookId}`, body, config);
     props.refetchBooks();
   });
 
   const [deleteBook] = useMutation(async () => {
-    await API.delete(`/book/${props.BookId}`);
+    await API.delete(`/book/${props.bookId}`);
     props.refetchBooks();
   });
 
