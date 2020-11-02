@@ -19,20 +19,20 @@ const Detail = () => {
   const [showRmvAlert, setShowRmvAddAlert] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [state, dispatch] = useContext(Context);
-  const userId = state.user.id;
+  const UserId = state.user.id;
 
   const { isLoading, error, data: book } = useQuery('getBook', async () => {
     const { data } = await API.get(`/book/${id}`);
     const book = data.data;
-    if (book.bookmarks.some((bookmark) => bookmark.userId === userId))
+    if (book.bookmarks.some((bookmark) => bookmark.UserId === UserId))
       setBookmarked(true);
     return book;
   });
 
-  const [bookmark] = useMutation((id) => API.post(`/bookmark/${id}/${userId}`));
+  const [bookmark] = useMutation((id) => API.post(`/bookmark/${id}/${UserId}`));
 
   const [unBookmark] = useMutation((id) =>
-    API.delete(`/unbookmark/${id}/${userId}`)
+    API.delete(`/unbookmark/${id}/${UserId}`)
   );
 
   const addBookmark = () => {

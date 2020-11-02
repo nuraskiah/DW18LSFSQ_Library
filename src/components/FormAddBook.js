@@ -29,7 +29,7 @@ const FormAddBook = (props) => {
     title: '',
     author: '',
     publication: '',
-    categoryId: '',
+    CategoryId: '',
     pages: '',
     isbn: '',
     about: '',
@@ -42,7 +42,7 @@ const FormAddBook = (props) => {
   const {
     title,
     publication,
-    categoryId,
+    CategoryId,
     pages,
     isbn,
     about,
@@ -64,7 +64,7 @@ const FormAddBook = (props) => {
     setShowErrorAlert(false);
 
     let status = 'Approved';
-    const userId = state.user.id;
+    const UserId = state.user.id;
     if (props.type === 'user') {
       author = state.user.fullName;
       status = 'Pending';
@@ -75,8 +75,8 @@ const FormAddBook = (props) => {
     formData.append('title', title);
     formData.append('author', author);
     formData.append('publication', publication);
-    formData.append('categoryId', categoryId);
-    formData.append('userId', userId);
+    formData.append('CategoryId', CategoryId);
+    formData.append('UserId', UserId);
     formData.append('pages', pages);
     formData.append('isbn', isbn);
     formData.append('about', about);
@@ -99,7 +99,7 @@ const FormAddBook = (props) => {
         title: '',
         author: '',
         publication: '',
-        categoryId: '',
+        CategoryId: '',
         pages: '',
         isbn: '',
         about: '',
@@ -195,8 +195,8 @@ const FormAddBook = (props) => {
         <Form.Group>
           <Form.Control
             as="select"
-            name="categoryId"
-            value={categoryId}
+            name="CategoryId"
+            value={CategoryId}
             onChange={(e) => handleChange(e)}
             required
           >

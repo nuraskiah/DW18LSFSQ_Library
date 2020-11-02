@@ -60,7 +60,7 @@ const Admin = () => {
               .map((book, index) => (
                 <UserBooksList
                   no={index + 1}
-                  bookId={book.id}
+                  BookId={book.id}
                   title={book.title}
                   isbn={book.isbn}
                   ebook={book.file}
