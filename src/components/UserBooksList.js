@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ReactReader } from 'react-reader';
 import { FaCheckCircle } from 'react-icons/fa';
 import { MdCancel } from 'react-icons/md';
@@ -13,8 +13,11 @@ const UserBooksList = (props) => {
   const [show, setShow] = useState(false);
   const [showApprovePrompt, setShowApprovePrompt] = useState(false);
   const [showRejectPrompt, setShowRejectPrompt] = useState(false);
+  const [showResetPrompt, setShowResetPrompt] = useState(false);
 
-  const [approve] = useMutation(async () => {
+  const { cover } = props;
+
+  const [handleAction] = useMutation(async (type) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -22,22 +25,7 @@ const UserBooksList = (props) => {
     };
 
     const body = JSON.stringify({
-      status: 'Approved',
-    });
-
-    await API.patch(`/book/${props.bookId}`, body, config);
-    props.refetchBooks();
-  });
-
-  const [reject] = useMutation(async () => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const body = JSON.stringify({
-      status: 'Rejected',
+      status: type,
     });
 
     await API.patch(`/book/${props.bookId}`, body, config);
@@ -50,53 +38,43 @@ const UserBooksList = (props) => {
   });
 
   let action, statusClass;
-  switch (props.status) {
-    case 'Approved':
-      action = <FaCheckCircle color="#3BB54A" size="31px" />;
-      statusClass = 'align-middle text-approved';
-      break;
-    case 'Rejected':
-      // action = <MdCancel color="#ff0742" size="29px" />;
-      action = (
-        <>
-          <Button
-            variant="danger"
-            className="cancel"
-            onClick={() => deleteBook()}
-          >
-            Delete
-          </Button>
-          {/* <Button
-              variant="success"
-              className="approve"
-              onClick={() => approve()}
-            >
-              Approve
-            </Button> */}
-        </>
-      );
-      statusClass = 'align-middle text-cancel';
-      break;
-    default:
-      action = (
-        <>
-          <Button
-            variant="danger"
-            className="cancel mr-2"
-            onClick={() => setShowRejectPrompt(true)}
-          >
-            Reject
-          </Button>
-          <Button
-            variant="success"
-            className="approve"
-            onClick={() => setShowApprovePrompt(true)}
-          >
-            Approve
-          </Button>
-        </>
-      );
-      statusClass = 'align-middle text-warning';
+
+  if (props.status === 'Pending') {
+    action = (
+      <>
+        <Button
+          variant="danger"
+          className="cancel mr-2"
+          onClick={() => setShowRejectPrompt(true)}
+        >
+          Reject
+        </Button>
+        <Button
+          variant="success"
+          className="approve"
+          onClick={() => setShowApprovePrompt(true)}
+        >
+          Approve
+        </Button>
+      </>
+    );
+    statusClass = 'align-middle text-warning';
+  } else {
+    action = (
+      <>
+        <Button
+          variant="secondary"
+          className="reset"
+          onClick={() => setShowResetPrompt(true)}
+        >
+          Reset
+        </Button>
+      </>
+    );
+    statusClass =
+      props.status === 'Approved'
+        ? 'align-middle text-approved'
+        : 'align-middle text-cancel';
   }
 
   return (
@@ -105,13 +83,28 @@ const UserBooksList = (props) => {
         <td className="align-middle">{props.no}</td>
         <td className="align-middle">{props.author}</td>
         <td className="align-middle">{props.isbn}</td>
-        <td
-          className="align-middle"
-          onClick={() => setShow(true)}
-          style={{ cursor: 'pointer' }}
+
+        <OverlayTrigger
+          placement="top"
+          overlay={(props) => (
+            <Tooltip {...props}>
+              <img
+                src={cover}
+                alt="cover"
+                style={{ width: 100, height: 135 }}
+              />
+            </Tooltip>
+          )}
         >
-          {props.ebook}
-        </td>
+          <td
+            className="align-middle"
+            onClick={() => setShow(true)}
+            style={{ cursor: 'pointer' }}
+          >
+            {props.ebook}
+          </td>
+        </OverlayTrigger>
+
         <td className={statusClass}>{props.status}</td>
         <td className="align-middle">{action}</td>
       </tr>
@@ -145,7 +138,7 @@ const UserBooksList = (props) => {
             </p>
           }
           onHide={() => setShowApprovePrompt(false)}
-          onAction={() => approve()}
+          onAction={() => handleAction('Approved')}
         />
       )}
 
@@ -159,7 +152,17 @@ const UserBooksList = (props) => {
             </p>
           }
           onHide={() => setShowRejectPrompt(false)}
-          onAction={() => reject()}
+          onAction={() => handleAction('Rejected')}
+        />
+      )}
+
+      {showResetPrompt && (
+        <Prompt
+          show={showResetPrompt}
+          action="Reset"
+          label={<p className="bold dh m-0">Are you sure you want to undo?</p>}
+          onHide={() => setShowResetPrompt(false)}
+          onAction={() => handleAction('Pending')}
         />
       )}
     </>

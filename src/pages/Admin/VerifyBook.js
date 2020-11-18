@@ -72,6 +72,7 @@ const Admin = () => {
                 author={book.author}
                 isbn={book.isbn}
                 ebook={book.file}
+                cover={book.cover}
                 status={book.status}
                 refetchBooks={refetch}
               />

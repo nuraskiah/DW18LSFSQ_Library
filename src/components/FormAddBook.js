@@ -117,14 +117,11 @@ const FormAddBook = (props) => {
       status = 'Pending';
     }
 
-    const date = publication.split('-');
-    const pubDate = months[date[1] - 1] + ' ' + date[0];
-
     const formData = new FormData();
 
     formData.append('title', title);
     formData.append('author', author);
-    formData.append('publication', pubDate);
+    formData.append('publication', publication);
     formData.append('categoryId', categoryId);
     formData.append('userId', userId);
     formData.append('pages', pages);
@@ -162,9 +159,7 @@ const FormAddBook = (props) => {
     setLoading(false);
   };
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     <>
       <Formik
         validationSchema={schema}
@@ -186,9 +181,11 @@ const FormAddBook = (props) => {
           handleChange,
           handleBlur,
           values,
+          setFieldTouched,
           setFieldValue,
           touched,
           errors,
+          isValid,
         }) => (
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Form.Group>
@@ -231,7 +228,16 @@ const FormAddBook = (props) => {
                 placeholder="Publication Date"
                 onFocus={(e) => (e.target.type = 'month')}
                 onChange={handleChange}
-                onBlur={handleBlur}
+                onBlur={(e) => {
+                  const date = e.target.value.split('-');
+                  const pubDate = months[date[1] - 1] + ' ' + date[0];
+                  setFieldValue(
+                    'publication',
+                    e.target.value ? pubDate : values.publication
+                  );
+                  setFieldTouched('publication', true);
+                  e.target.type = 'text';
+                }}
                 isInvalid={touched.publication && !!errors.publication}
               />
               <Form.Control.Feedback type="invalid">
@@ -248,9 +254,10 @@ const FormAddBook = (props) => {
                 isInvalid={touched.categoryId && !!errors.categoryId}
               >
                 <option value={null}>Category</option>
-                {data.data.data.map((category, i) => (
-                  <option value={category.id}>{category.name}</option>
-                ))}
+                {!isLoading &&
+                  data.data.data.map((category, i) => (
+                    <option value={category.id}>{category.name}</option>
+                  ))}
               </Form.Control>
               <Form.Control.Feedback type="invalid">
                 {touched.categoryId && errors.categoryId}
@@ -293,10 +300,30 @@ const FormAddBook = (props) => {
             placeholder="About This Book"
             onChange={(e) => handleChange(e)}
           /> */}
+              <Form.Control
+                name="about"
+                value={values.about}
+                isInvalid={touched.about && !!errors.about}
+                style={{ display: 'none' }}
+              />
               <CKEditor
                 editor={InlineEditor}
                 className="form-control"
-                config={{ placeholder: 'About This Book' }}
+                config={{
+                  placeholder: 'About This Book',
+                  toolbar: [
+                    'heading',
+                    '|',
+                    'bold',
+                    'italic',
+                    'link',
+                    'bulletedList',
+                    'numberedList',
+                    'blockQuote',
+                    'undo',
+                    'redo',
+                  ],
+                }}
                 data={values.about}
                 style={{ height: 200 }}
                 onInit={(editor) => {
@@ -314,6 +341,7 @@ const FormAddBook = (props) => {
                   const data = editor.getData();
                   setFieldValue('about', data);
                 }}
+                onBlur={() => setFieldTouched('about', true)}
                 isInvalid={touched.about && !!errors.about}
               />
               <Form.Control.Feedback type="invalid">

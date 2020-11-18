@@ -4,6 +4,9 @@ import { useQuery, useMutation } from 'react-query';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
+import CKEditor from '@ckeditor/ckeditor5-react';
+import InlineEditor from '@ckeditor/ckeditor5-build-inline';
+
 import { API } from '../../config/config';
 
 import { ActionLoader } from '../Loader';
@@ -17,6 +20,7 @@ const Edit = (props) => {
     categoryId: yup.number().required(),
     pages: yup.number().required(),
     isbn: yup.number().required(),
+    about: yup.string().required(),
   });
 
   const handleSubmit = async (values) => {
@@ -51,8 +55,29 @@ const Edit = (props) => {
     API.get('/categories')
   );
 
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
   return (
-    <Modal show={props.show} centered backdrop="static" size="lg">
+    <Modal
+      show={props.show}
+      centered
+      backdrop="static"
+      size="lg"
+      className="edit"
+    >
       <Modal.Body className="p-4">
         <h4 className="mb-4 sign">Edit Book</h4>
         <Formik
@@ -66,6 +91,7 @@ const Edit = (props) => {
             categoryId: props.book.category.id,
             pages: props.book.pages,
             isbn: props.book.isbn,
+            about: props.book.about,
           }}
         >
           {({
@@ -75,6 +101,8 @@ const Edit = (props) => {
             values,
             touched,
             errors,
+            setFieldTouched,
+            setFieldValue,
           }) => (
             <Form onSubmit={handleSubmit}>
               <Form.Group>
@@ -98,7 +126,17 @@ const Edit = (props) => {
                   name="publication"
                   value={values.publication}
                   onChange={handleChange}
-                  onBlur={handleBlur}
+                  onFocus={(e) => (e.target.type = 'month')}
+                  onBlur={(e) => {
+                    const date = e.target.value.split('-');
+                    const pubDate = months[date[1] - 1] + ' ' + date[0];
+                    setFieldValue(
+                      'publication',
+                      e.target.value ? pubDate : values.publication
+                    );
+                    setFieldTouched('publication', true);
+                    e.target.type = 'text';
+                  }}
                   isInvalid={touched.publication && !!errors.publication}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -159,6 +197,62 @@ const Edit = (props) => {
                 />
                 <Form.Control.Feedback type="invalid">
                   {touched.isbn && errors.isbn}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group>
+                {/* <Form.Control
+            as="textarea"
+            value={values.about}
+            name="about"
+            rows={5}
+            placeholder="About This Book"
+            onChange={(e) => handleChange(e)}
+          /> */}
+                <Form.Control
+                  name="about"
+                  value={values.about}
+                  isInvalid={touched.about && !!errors.about}
+                  style={{ display: 'none' }}
+                />
+                <CKEditor
+                  editor={InlineEditor}
+                  className="form-control"
+                  config={{
+                    placeholder: 'About This Book',
+                    toolbar: [
+                      'heading',
+                      '|',
+                      'bold',
+                      'italic',
+                      'link',
+                      'bulletedList',
+                      'numberedList',
+                      'blockQuote',
+                      'undo',
+                      'redo',
+                    ],
+                  }}
+                  data={values.about}
+                  style={{ height: 200 }}
+                  onInit={(editor) => {
+                    // You can store the "editor" and use when it is needed.
+                    //console.log("Editor is ready to use!", editor);
+                    editor.editing.view.change((writer) => {
+                      writer.setStyle(
+                        'height',
+                        '200px',
+                        editor.editing.view.document.getRoot()
+                      );
+                    });
+                  }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setFieldValue('about', data);
+                  }}
+                  onBlur={() => setFieldTouched('about', true)}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {touched.about && errors.about}
                 </Form.Control.Feedback>
               </Form.Group>
               <div className="action-button">
