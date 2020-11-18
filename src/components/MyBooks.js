@@ -1,17 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Context } from '../context/Context';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Dropdown } from 'react-bootstrap';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { useQuery } from 'react-query';
 import { API } from '../config/config';
 
-import Book from '../components/Book';
-import Loading from '../components/Loading';
+import Book from './Book';
+import Loading from './Loading';
+import Edit from './Modal/Edit';
+import Prompt from './Modal/Prompt';
 
 const MyBooks = () => {
   const [state] = useContext(Context);
   const { id } = state.user;
 
-  const { isLoading, data } = useQuery('getUserBooks', () =>
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const { isLoading, data, refetch } = useQuery('getUserBooks', () =>
     API.get(`/user-books/${id}`)
   );
 
@@ -24,9 +30,11 @@ const MyBooks = () => {
         <div className="book-list mt-3">
           {data.data.data.map((book, i) => (
             <div style={{ position: 'relative' }}>
+              {/* <div className="book-action"></div> */}
+
               {book.status !== 'Approved' && (
                 <div
-                  class="overlay"
+                  className="overlay"
                   style={{
                     display: 'flex',
                     position: 'absolute',
@@ -50,12 +58,16 @@ const MyBooks = () => {
                   )}
                 </div>
               )}
+
               <Book
                 id={book.id}
                 cover={book.cover}
                 title={book.title}
                 author={book.author}
+                edit={book}
+                refetchBook={refetch}
                 key={i}
+                profile={true}
               />
             </div>
           ))}

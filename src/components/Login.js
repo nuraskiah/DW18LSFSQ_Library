@@ -58,17 +58,18 @@ const Login = (props) => {
       try {
         const { data } = await API.get('/validate');
 
-        dispatch({
+        await dispatch({
           type: 'GET_USER',
           payload: data.data,
         });
+
+        if (data.data.role === 'admin') history.push('/admin');
+        else history.push('/home');
       } catch (error) {
         dispatch({
           type: 'AUTH_ERROR',
         });
       }
-
-      history.push('/home');
     } catch (error) {
       dispatch({
         type: 'LOGIN_FAILED',
@@ -80,12 +81,7 @@ const Login = (props) => {
 
   return (
     <>
-      <Modal
-        {...props}
-        size="md"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+      <Modal {...props} size="md" className="auth" centered>
         <Modal.Body>
           <h4 className="mb-4 sign">Sign In</h4>
 
@@ -102,12 +98,12 @@ const Login = (props) => {
             {({
               handleSubmit,
               handleChange,
+              handleBlur,
               values,
               touched,
-              isValid,
               errors,
             }) => (
-              <Form noValidate onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="email">
                   <Form.Control
                     type="email"
@@ -115,11 +111,11 @@ const Login = (props) => {
                     name="email"
                     value={values.email}
                     onChange={handleChange}
-                    isInvalid={!!errors.email}
-                    isValid={touched.email && !errors.email}
+                    onBlur={handleBlur}
+                    isInvalid={touched.email && !!errors.email}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {errors.email}
+                    {touched.email && errors.email}
                   </Form.Control.Feedback>
                 </Form.Group>
                 <InputGroup controlId="password" className="mb-3">
@@ -129,12 +125,12 @@ const Login = (props) => {
                     name="password"
                     value={values.password}
                     onChange={handleChange}
-                    isInvalid={!!errors.password}
-                    isValid={touched.password && !errors.password}
+                    onBlur={handleBlur}
+                    isInvalid={touched.password && !!errors.password}
                   />
                   <InputGroup.Append>
                     <InputGroup.Text
-                      id="basic-addon2"
+                      id="password"
                       onClick={() => setShow(!show)}
                       style={{ width: 46 }}
                     >

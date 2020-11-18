@@ -13,8 +13,9 @@ import { PrivateRoute, AdminRoute } from './components/PrivateRoute';
 
 // pages
 import Landing from './pages/Landing';
-import Admin from './pages/Admin';
-import AdminAddBook from './pages/AdminAddBook';
+import Dashboard from './pages/Admin/Dashboard';
+import VerifyBook from './pages/Admin/VerifyBook';
+import AdminAddBook from './pages/Admin/AddBook';
 import Read from './pages/Read';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
@@ -78,7 +79,8 @@ function App() {
 
       <Switch>
         <Route exact path="/" component={Landing} />
-        <AdminRoute exact path="/admin" component={Admin} />
+        <AdminRoute exact path="/admin" component={Dashboard} />
+        <AdminRoute exact path="/admin/verify-book" component={VerifyBook} />
         <AdminRoute exact path="/admin/add-book" component={AdminAddBook} />
         <PrivateRoute exact path="/read/:id" component={Read} />
         <Route

@@ -61,12 +61,13 @@ const MyProfile = () => {
                   src={photo}
                   alt="photo"
                   style={{
+                    display: 'block',
                     width: 200,
                     height: 200,
                     objectFit: 'cover',
                   }}
+                  className="mb-2"
                 />
-                <br />
                 <Button
                   variant="light"
                   className="primary"

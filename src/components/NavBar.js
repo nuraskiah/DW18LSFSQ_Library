@@ -5,6 +5,7 @@ import { useRouteMatch, useHistory } from 'react-router-dom';
 import { Context } from '../context/Context';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { BiBookAdd, BiExit } from 'react-icons/bi';
+import { RiDashboardLine } from 'react-icons/ri';
 import { TiThList } from 'react-icons/ti';
 
 function NavBar() {
@@ -44,6 +45,13 @@ function NavBar() {
                   <div
                     className="pop-item"
                     onClick={() => history.push('/admin')}
+                  >
+                    <RiDashboardLine size="20px" clasName="icon" />
+                    <p className="ml-2">Dashboard</p>
+                  </div>
+                  <div
+                    className="pop-item"
+                    onClick={() => history.push('/admin/verify-book')}
                   >
                     <TiThList size="20px" clasName="icon" />
                     <p className="ml-2">Verify Book</p>

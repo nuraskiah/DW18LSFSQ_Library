@@ -87,12 +87,7 @@ const Register = (props) => {
   };
 
   return (
-    <Modal
-      {...props}
-      size="md"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
+    <Modal {...props} size="md" className="auth" centered>
       <Modal.Body>
         <h4 className="mb-4 sign">Sign Up</h4>
 
@@ -113,6 +108,7 @@ const Register = (props) => {
           {({
             handleSubmit,
             handleChange,
+            handleBlur,
             values,
             touched,
             isValid,
@@ -126,11 +122,12 @@ const Register = (props) => {
                   name="email"
                   placeholder="Email"
                   onChange={handleChange}
-                  isInvalid={!!errors.email}
+                  onBlur={handleBlur}
+                  isInvalid={touched.email && !!errors.email}
                   isValid={touched.email && !errors.email}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.email}
+                  {touched.email && errors.email}
                 </Form.Control.Feedback>
               </Form.Group>
               <InputGroup controlId="password" className="mb-3">
@@ -140,12 +137,13 @@ const Register = (props) => {
                   name="password"
                   placeholder="Password"
                   onChange={handleChange}
-                  isInvalid={!!errors.password}
+                  onBlur={handleBlur}
+                  isInvalid={touched.password && !!errors.password}
                   isValid={touched.password && !errors.password}
                 />
                 <InputGroup.Append>
                   <InputGroup.Text
-                    id="basic-addon2"
+                    id="password"
                     onClick={() => setShow(!show)}
                     style={{ width: 46 }}
                   >
@@ -157,7 +155,7 @@ const Register = (props) => {
                   </InputGroup.Text>
                 </InputGroup.Append>
                 <Form.Control.Feedback type="invalid">
-                  {errors.password}
+                  {touched.password && errors.password}
                 </Form.Control.Feedback>
               </InputGroup>
               <Form.Group controlId="name">
@@ -167,11 +165,12 @@ const Register = (props) => {
                   name="fullName"
                   placeholder="Full Name"
                   onChange={handleChange}
-                  isInvalid={!!errors.fullName}
+                  onBlur={handleBlur}
+                  isInvalid={touched.fullName && !!errors.fullName}
                   isValid={touched.fullName && !errors.fullName}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.fullName}
+                  {touched.fullName && errors.fullName}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="gender">
@@ -180,15 +179,16 @@ const Register = (props) => {
                   name="gender"
                   value={values.gender}
                   onChange={handleChange}
-                  isInvalid={!!errors.gender}
+                  onBlur={handleBlur}
+                  isInvalid={touched.gender && !!errors.gender}
                   isValid={touched.gender && !errors.gender}
                 >
-                  <option>Gender</option>
-                  <option>Male</option>
-                  <option>Female</option>
+                  <option value="">Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  {errors.gender}
+                  {touched.gender && errors.gender}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="phone">
@@ -198,11 +198,12 @@ const Register = (props) => {
                   name="phone"
                   placeholder="Phone"
                   onChange={handleChange}
-                  isInvalid={!!errors.phone}
+                  onBlur={handleBlur}
+                  isInvalid={touched.phone && !!errors.phone}
                   isValid={touched.phone && !errors.phone}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.phone}
+                  {touched.phone && errors.phone}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="address">
@@ -212,11 +213,12 @@ const Register = (props) => {
                   name="address"
                   placeholder="Address"
                   onChange={handleChange}
-                  isInvalid={!!errors.address}
+                  onBlur={handleBlur}
+                  isInvalid={touched.address && !!errors.address}
                   isValid={touched.address && !errors.address}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.address}
+                  {touched.address && errors.address}
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -240,7 +242,7 @@ const Register = (props) => {
                     loading={loading}
                   />
                 ) : (
-                  'Sign In'
+                  'Sign Up'
                 )}
               </Button>
             </Form>

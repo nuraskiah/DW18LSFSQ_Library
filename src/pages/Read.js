@@ -10,7 +10,8 @@ import Loading from '../components/Loading';
 const Read = () => {
   const [fullScreen, setFullScreen] = useState(false);
   const [largeText, setLargeText] = useState(false);
-  const [rendition, setRendition] = useState({});
+  const [rendition, setRendition] = useState();
+  const [location, setLocation] = useState();
 
   const { id } = useParams();
 
@@ -23,6 +24,10 @@ const Read = () => {
   const getRendition = (rendition) => {
     setRendition(rendition);
     rendition.themes.fontSize(largeText ? '140%' : '100%');
+  };
+
+  const handleLocationChanged = (location) => {
+    setLocation(location);
   };
 
   return isLoading ? (
@@ -61,7 +66,9 @@ const Read = () => {
           <ReactReader
             url={`${fileURL}/${book.file}`}
             title={book.title}
-            getRendition={(rendition) => getRendition(rendition)}
+            getRendition={getRendition}
+            location={location}
+            locationChanged={handleLocationChanged}
             // styles={{ fontSize: '140%' }}
           />
         </div>

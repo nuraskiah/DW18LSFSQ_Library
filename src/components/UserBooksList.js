@@ -1,11 +1,19 @@
-import React from 'react';
-import { Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { ReactReader } from 'react-reader';
 import { FaCheckCircle } from 'react-icons/fa';
 import { MdCancel } from 'react-icons/md';
 import { useMutation } from 'react-query';
-import { API } from '../config/config';
+
+import { API, fileURL } from '../config/config';
+
+import Prompt from './Modal/Prompt';
 
 const UserBooksList = (props) => {
+  const [show, setShow] = useState(false);
+  const [showApprovePrompt, setShowApprovePrompt] = useState(false);
+  const [showRejectPrompt, setShowRejectPrompt] = useState(false);
+
   const [approve] = useMutation(async () => {
     const config = {
       headers: {
@@ -75,14 +83,14 @@ const UserBooksList = (props) => {
           <Button
             variant="danger"
             className="cancel mr-2"
-            onClick={() => reject()}
+            onClick={() => setShowRejectPrompt(true)}
           >
             Reject
           </Button>
           <Button
             variant="success"
             className="approve"
-            onClick={() => approve()}
+            onClick={() => setShowApprovePrompt(true)}
           >
             Approve
           </Button>
@@ -95,12 +103,65 @@ const UserBooksList = (props) => {
     <>
       <tr>
         <td className="align-middle">{props.no}</td>
-        <td className="align-middle">{props.title}</td>
+        <td className="align-middle">{props.author}</td>
         <td className="align-middle">{props.isbn}</td>
-        <td className="align-middle">{props.ebook}</td>
+        <td
+          className="align-middle"
+          onClick={() => setShow(true)}
+          style={{ cursor: 'pointer' }}
+        >
+          {props.ebook}
+        </td>
         <td className={statusClass}>{props.status}</td>
         <td className="align-middle">{action}</td>
       </tr>
+
+      {show && (
+        <Modal
+          show={show}
+          className="preview"
+          centered
+          size="lg"
+          onHide={() => setShow(false)}
+        >
+          <Modal.Body>
+            <div style={{ position: 'relative', height: '100%' }}>
+              <ReactReader
+                url={`${fileURL}/${props.ebook}`}
+                title={props.title}
+              />
+            </div>
+          </Modal.Body>
+        </Modal>
+      )}
+
+      {showApprovePrompt && (
+        <Prompt
+          show={showApprovePrompt}
+          action="Approve"
+          label={
+            <p className="bold dh m-0">
+              Are you sure you want to approve this book?
+            </p>
+          }
+          onHide={() => setShowApprovePrompt(false)}
+          onAction={() => approve()}
+        />
+      )}
+
+      {showRejectPrompt && (
+        <Prompt
+          show={showRejectPrompt}
+          action="Reject"
+          label={
+            <p className="bold dh m-0">
+              Are you sure you want to reject this book?
+            </p>
+          }
+          onHide={() => setShowRejectPrompt(false)}
+          onAction={() => reject()}
+        />
+      )}
     </>
   );
 };
