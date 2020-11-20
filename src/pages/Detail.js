@@ -53,7 +53,7 @@ const Detail = () => {
     <Error />
   ) : (
     <div className="detail-container">
-      <Row>
+      <Row className="mb-5">
         <Col md={5}>
           <img
             src={book.cover}
@@ -83,15 +83,13 @@ const Detail = () => {
           <DetailItem name="ISBN" data={book.isbn} style="text-danger" />
         </Col>
       </Row>
-      <br />
       <hr />
-      <br />
-      <Row>
+      <Row className="mt-5">
         <Col>
           <h3 className="heading">About This Book</h3>
-          <p className="text-justify">{ReactHtmlParser(book.about)}</p>
-          <br />
-          <br />
+          <p className="about text-justify mb-5">
+            {ReactHtmlParser(book.about)}
+          </p>
 
           <Button
             variant="light"

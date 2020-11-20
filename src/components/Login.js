@@ -81,7 +81,7 @@ const Login = (props) => {
 
   return (
     <>
-      <Modal {...props} size="md" className="auth" centered>
+      <Modal {...props} size="md" className="rounded" centered>
         <Modal.Body>
           <h4 className="mb-4 sign">Sign In</h4>
 

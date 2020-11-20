@@ -35,6 +35,10 @@ body {
   color: black;
 }
 
+.about p {
+  margin-bottom: 1em !important;
+}
+
 .center {
   display: flex !important;
   justify-content: center !important;
@@ -226,15 +230,15 @@ nav {
 
 /* login and register modal */
 
-.auth .modal-dialog {
+.rounded .modal-dialog {
   width: 400px;
 }
 
-.auth .modal-content {
+.rounded .modal-content {
   border-radius: 20px;
 }
 
-.auth .modal-body {
+.rounded .modal-body {
   padding: 35px;
   border-radius: 40px;
 }
@@ -477,10 +481,6 @@ a.dropdown-item:hover {
   font-size: 14px;
 }
 
-.change-profile .modal-dialog {
-  width: 400px;
-}
-
 /* Admin */
 .admin {
   padding: 150px 70px 100px 70px;
@@ -660,4 +660,8 @@ td:last-child {
 
 .edit .modal-content {
   padding: 5px !important;
+}
+
+.edit .action-button {
+  float: right;
 }

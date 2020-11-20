@@ -90,7 +90,7 @@ const ChangeProfilePhoto = (props) => {
     <Modal
       {...props}
       size="md"
-      className="change-profile"
+      className="rounded"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >

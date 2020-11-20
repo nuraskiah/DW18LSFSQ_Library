@@ -30,7 +30,7 @@ const Edit = (props) => {
       },
     };
 
-    const { title, publication, categoryId, pages, isbn } = values;
+    const { title, publication, categoryId, pages, isbn, about } = values;
 
     const body = JSON.stringify({
       title,
@@ -38,6 +38,7 @@ const Edit = (props) => {
       categoryId,
       pages,
       isbn,
+      about,
     });
 
     try {
@@ -259,7 +260,7 @@ const Edit = (props) => {
                 <Button variant="light" onClick={props.onHide}>
                   Cancel
                 </Button>
-                <Button className="primary" type="submit">
+                <Button className="primary ml-2" type="submit">
                   {loading ? <ActionLoader /> : 'Save'}
                 </Button>
               </div>
